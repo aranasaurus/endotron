@@ -1,5 +1,5 @@
 //
-//  ARAppDelegate.h
+//  ARInputViewController.h
 //  endotron
 //
 //  Created by Ryan Arana on 2/23/14.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ARAppDelegate : UIResponder <UIApplicationDelegate>
-
-@property (strong, nonatomic) UIWindow *window;
+@interface ARInputViewController : UIViewController
 
 @end

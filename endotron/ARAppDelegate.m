@@ -2,8 +2,8 @@
 //  ARAppDelegate.m
 //  endotron
 //
-//  Created by Ryan Arana on 1/30/14.
-//  Copyright (c) 2014 aranasaurus. All rights reserved.
+//  Created by Ryan Arana on 2/23/14.
+//  Copyright (c) 2014 aranasaurus.com. All rights reserved.
 //
 
 #import "ARAppDelegate.h"
@@ -15,7 +15,7 @@
     // Override point for customization after application launch.
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

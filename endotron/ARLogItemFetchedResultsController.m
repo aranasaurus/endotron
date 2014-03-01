@@ -21,11 +21,11 @@
 - (id)initWithTableView:(UITableView *)tableView delegate:(id<ARLogItemFetchedResultsDelegate>)delegate reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super init];
     if (self != nil) {
-        self.tableView = tableView;
-        self.tableView.dataSource = self;
         self.delegate = delegate;
         self.reuseIdentifier = reuseIdentifier;
         self.fetchedResultsController = [[ARLogItem store] allItems];
+        self.tableView = tableView;
+        self.tableView.dataSource = self;
     }
     return self;
 }

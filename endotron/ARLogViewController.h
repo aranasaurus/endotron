@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "ARLogItemFetchedResultsController.h"
 
-@interface ARLogViewController : UIViewController <ARLogItemFetchedResultsDelegate>
+@interface ARLogViewController : UIViewController <ARLogItemFetchedResultsDelegate, UITableViewDelegate>
 
 @end

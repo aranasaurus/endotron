@@ -25,7 +25,7 @@
     [super viewDidLoad];
 
     self.resultsController = [[ARLogItemFetchedResultsController alloc] initWithTableView:self.tableView delegate:self reuseIdentifier:@"LogItemCell"];
-    [self.tableView registerClass:[ARLogItemTableViewCell class] forCellReuseIdentifier:@"LogItemCell"];
+    self.tableView.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning

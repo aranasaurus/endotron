@@ -14,6 +14,7 @@
 @interface ARLogViewController ()
 
 @property (strong, nonatomic) ARLogItemFetchedResultsController *resultsController;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
@@ -24,6 +25,7 @@
     [super viewDidLoad];
 
     self.resultsController = [[ARLogItemFetchedResultsController alloc] initWithTableView:self.tableView delegate:self reuseIdentifier:@"LogItemCell"];
+    [self.tableView registerClass:[ARLogItemTableViewCell class] forCellReuseIdentifier:@"LogItemCell"];
 }
 
 - (void)didReceiveMemoryWarning

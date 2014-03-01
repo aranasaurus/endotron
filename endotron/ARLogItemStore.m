@@ -69,8 +69,12 @@
 }
 
 - (ARLogItem *)newItem {
+    return [self newItemWithTimestamp:[NSDate date]];
+}
+
+- (ARLogItem *)newItemWithTimestamp:(NSDate *)timestamp {
     ARLogItem *item = [NSEntityDescription insertNewObjectForEntityForName:[ARLogItem entityName] inManagedObjectContext:self.managedObjectContext];
-    item.timestamp = [NSDate date];
+    item.timestamp = timestamp;
     NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitHour|NSCalendarUnitMinute) fromDate:item.timestamp];
     if (components.hour < 11 && components.hour > 5) {
         item.type = @"breakfast";
@@ -82,6 +86,10 @@
         item.type = @"snack";
     }
     return item;
+}
+
+- (BOOL)save:(NSError **)error {
+    return [self.managedObjectContext save:error];
 }
 
 

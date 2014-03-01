@@ -19,4 +19,7 @@
 - (NSFetchedResultsController *)allItems:(BOOL)ascending;
 - (ARLogItem *)newItem;
 
+- (ARLogItem *)newItemWithTimestamp:(NSDate *)timestamp;
+
+- (BOOL)save:(NSError **)error;
 @end

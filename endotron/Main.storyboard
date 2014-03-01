@@ -102,6 +102,9 @@
                         <barButtonItem image="gear" id="zQt-PF-U1A"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Log" id="RKd-D6-cYb"/>
+                    <connections>
+                        <outlet property="tableView" destination="KlQ-e6-k6h" id="OLF-yf-xke"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
@@ -129,7 +132,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="gear" width="44" height="44"/>
+        <image name="gear" width="22" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

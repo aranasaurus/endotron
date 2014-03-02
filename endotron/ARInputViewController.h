@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ARInputViewController : UIViewController
+@class ARLogItem;
+
+@interface ARInputViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate>
+
+@property (strong, nonatomic) ARLogItem *logItem;
 
 @end

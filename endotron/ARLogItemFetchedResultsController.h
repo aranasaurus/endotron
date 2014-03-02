@@ -17,6 +17,7 @@
 @property (strong, nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) id<ARLogItemFetchedResultsDelegate> delegate;
 @property (copy, nonatomic) NSString *reuseIdentifier;
+@property (assign, nonatomic, getter=isPaused) BOOL paused;
 
 - (id)initWithTableView:(UITableView *)tableView delegate:(id<ARLogItemFetchedResultsDelegate>)delegate reuseIdentifier:(NSString *)reuseIdentifier;
 

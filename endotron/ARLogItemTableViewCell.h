@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *levemirLabel;
 @property (weak, nonatomic) IBOutlet UILabel *humalogLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *foodLabel;
 
 
 @end

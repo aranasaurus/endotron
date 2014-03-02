@@ -18,6 +18,17 @@
 
 @implementation ARLogItemFetchedResultsController
 
+- (void)setPaused:(BOOL)paused {
+    _paused = paused;
+    if (paused) {
+        self.fetchedResultsController.delegate = nil;
+    } else {
+        self.fetchedResultsController.delegate = self;
+        [self.fetchedResultsController performFetch:NULL];
+        [self.tableView reloadData];
+    }
+}
+
 - (id)initWithTableView:(UITableView *)tableView delegate:(id<ARLogItemFetchedResultsDelegate>)delegate reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super init];
     if (self != nil) {

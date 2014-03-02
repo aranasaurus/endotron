@@ -20,6 +20,16 @@
 
 @implementation ARLogViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.resultsController.paused = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.resultsController.paused = YES;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -42,6 +52,7 @@
     logCell.carbsLabel.text = [item.carbs stringValue];
     logCell.commentsLabel.text = item.comments;
     logCell.dateTimeLabel.text = [self formatTimestamp:item.timestamp];
+    logCell.foodLabel.text = item.food;
     logCell.humalogLabel.text = [item.humalog stringValue];
     logCell.levemirLabel.text = [item.levemir stringValue];
     logCell.typeLabel.text = item.type;
@@ -56,5 +67,12 @@
     });
     return [formatter stringFromDate:timestamp];
 }
+
+- (IBAction)syncTapped:(id)sender {
+}
+
+- (IBAction)settingsTapped:(id)sender {
+}
+
 
 @end

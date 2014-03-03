@@ -204,10 +204,18 @@
 - (void)adjustVerticalOrigin:(CGFloat)distance {
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationDuration:0.25];
     self.view.frame = CGRectMake(self.view.frame.origin.x, distance,
             self.view.frame.size.width, self.view.frame.size.height);
     [UIView commitAnimations];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [touches anyObject];
+    if (touch.phase == UITouchPhaseBegan) {
+        [self.activeView resignFirstResponder];
+        self.activeView = nil;
+    }
 }
 
 @end

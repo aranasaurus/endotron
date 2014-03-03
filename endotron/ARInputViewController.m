@@ -146,8 +146,8 @@ static CGFloat const kARNumberInputSizeValue = 56;
             || textField == self.levemirTextField
             || textField == self.humalogTextField) {
         self.savedPlaceholderText = textField.placeholder;
-        textField.placeholder = @"";
         textField.font = [textField.font fontWithSize:kARNumberInputSizeValue];
+        textField.placeholder = @"";
     }
 }
 
@@ -214,6 +214,9 @@ static CGFloat const kARNumberInputSizeValue = 56;
     CGRect activeViewRect = [self.activeView convertRect:self.activeView.bounds toView:self.view];
     if (CGRectIntersectsRect(self.keyboardRect, activeViewRect)) {
         self.moveDistanceForKeyboard = self.keyboardRect.origin.y - CGRectGetMaxY(activeViewRect);
+        if (self.activeView == self.bloodSugarTextField || self.activeView == self.carbsTextField) {
+            self.moveDistanceForKeyboard += -(self.activeView.frame.size.height/2);
+        }
         [self adjustVerticalOrigin:self.moveDistanceForKeyboard];
     } else {
         [self adjustVerticalOrigin:0];

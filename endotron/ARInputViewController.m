@@ -21,7 +21,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *levemirTextField;
 @property (weak, nonatomic) IBOutlet UITextField *humalogTextField;
 
-@property (strong, nonatomic) UITextField *activeTextField;
+@property (strong, nonatomic) UIView *activeView;
+@property (assign, nonatomic) CGFloat moveDistanceForKeyboard;
+@property (assign, nonatomic) CGRect keyboardRect;
 
 @end
 
@@ -62,6 +64,14 @@
 - (void)setLogItem:(ARLogItem *)logItem {
     _logItem = logItem;
     [self reloadUI];
+}
+
+- (void)setActiveView:(UIView *)activeView {
+    _activeView = activeView;
+    if (activeView != nil && self.keyboardRect.size.height != 0) {
+        // Keyboard showing, adjust for new view
+        [self moveViewForKeyboard];
+    }
 }
 
 - (void)reloadUI {
@@ -125,11 +135,11 @@
 #pragma mark TextField/View delegate methods
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.activeTextField = textField;
+    self.activeView = textField;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    self.activeTextField = nil;
+    self.activeView = nil;
     [self updateLogItem];
 }
 
@@ -148,11 +158,12 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-
+    self.activeView = textView;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     self.logItem.comments = textView.text;
+    self.activeView = nil;
 }
 
 #pragma Keyboard handling
@@ -160,34 +171,41 @@
 - (void)registerForKeyboardNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
-                                                 name:UIKeyboardWillShowNotification object:nil];
+                                                 name:UIKeyboardDidShowNotification object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillBeHidden:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
+                                             selector:@selector(keyboardWasHidden:)
+                                                 name:UIKeyboardDidHideNotification object:nil];
 
 }
 
-// Called when the UIKeyboardDidShowNotification is sent.
 - (void)keyboardWasShown:(NSNotification *)aNotification {
     NSDictionary *info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-
-    [self moveViewForKeyboardHeight:kbSize.height];
+    self.keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    [self moveViewForKeyboard];
 }
 
-// Called when the UIKeyboardWillHideNotification is sent
-- (void)keyboardWillBeHidden:(NSNotification *)aNotification {
-    NSDictionary *info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    [self moveViewForKeyboardHeight:-kbSize.height];
+- (void)keyboardWasHidden:(NSNotification *)aNotification {
+    [self adjustVerticalOrigin:0];
+    self.moveDistanceForKeyboard = 0;
+    self.keyboardRect = CGRectZero;
 }
 
-- (void)moveViewForKeyboardHeight:(CGFloat)height {
+- (void)moveViewForKeyboard {
+    CGRect activeViewRect = [self.activeView convertRect:self.activeView.bounds toView:self.view];
+    if (CGRectIntersectsRect(self.keyboardRect, activeViewRect)) {
+        self.moveDistanceForKeyboard = self.keyboardRect.origin.y - CGRectGetMaxY(activeViewRect);
+        [self adjustVerticalOrigin:self.moveDistanceForKeyboard];
+    } else {
+        [self adjustVerticalOrigin:0];
+    }
+}
+
+- (void)adjustVerticalOrigin:(CGFloat)distance {
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationDuration:0.5];
-    self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y - height,
+    self.view.frame = CGRectMake(self.view.frame.origin.x, distance,
             self.view.frame.size.width, self.view.frame.size.height);
     [UIView commitAnimations];
 }

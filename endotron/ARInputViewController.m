@@ -43,6 +43,16 @@
     self.logItem = [[ARLogItem store] newItem];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self registerForKeyboardNotifications];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -113,6 +123,7 @@
 }
 
 #pragma mark TextField/View delegate methods
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     self.activeTextField = textField;
 }
@@ -142,6 +153,43 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     self.logItem.comments = textView.text;
+}
+
+#pragma Keyboard handling
+
+- (void)registerForKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+
+}
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardWasShown:(NSNotification *)aNotification {
+    NSDictionary *info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+
+    [self moveViewForKeyboardHeight:kbSize.height];
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification *)aNotification {
+    NSDictionary *info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    [self moveViewForKeyboardHeight:-kbSize.height];
+}
+
+- (void)moveViewForKeyboardHeight:(CGFloat)height {
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:0.5];
+    self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y - height,
+            self.view.frame.size.width, self.view.frame.size.height);
+    [UIView commitAnimations];
 }
 
 @end

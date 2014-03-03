@@ -10,6 +10,9 @@
 #import "ARLogItem.h"
 #import "ARLogItemStore.h"
 
+static CGFloat const kARNumberInputSizePlaceholder = 24;
+static CGFloat const kARNumberInputSizeValue = 56;
+
 @interface ARInputViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *timestampTextField;
@@ -24,6 +27,8 @@
 @property (strong, nonatomic) UIView *activeView;
 @property (assign, nonatomic) CGFloat moveDistanceForKeyboard;
 @property (assign, nonatomic) CGRect keyboardRect;
+
+@property (copy, nonatomic) NSString *savedPlaceholderText;
 
 @end
 
@@ -136,10 +141,24 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     self.activeView = textField;
+    if (textField == self.bloodSugarTextField
+            || textField == self.carbsTextField
+            || textField == self.levemirTextField
+            || textField == self.humalogTextField) {
+        self.savedPlaceholderText = textField.placeholder;
+        textField.placeholder = @"";
+        textField.font = [textField.font fontWithSize:kARNumberInputSizeValue];
+    }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     self.activeView = nil;
+    textField.placeholder = self.savedPlaceholderText;
+    if ([textField.text isEqualToString:@""]) {
+        textField.font = [textField.font fontWithSize:kARNumberInputSizePlaceholder];
+    }
+    self.savedPlaceholderText = nil;
+
     [self updateLogItem];
 }
 

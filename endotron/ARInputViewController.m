@@ -27,6 +27,7 @@ static CGFloat const kARNumberInputSizeValue = 56;
 @property (strong, nonatomic) UIView *activeView;
 @property (assign, nonatomic) CGFloat moveDistanceForKeyboard;
 @property (assign, nonatomic) CGRect keyboardRect;
+@property (assign, nonatomic) BOOL shouldCancelChanges;
 
 @property (copy, nonatomic) NSString *savedPlaceholderText;
 
@@ -46,6 +47,17 @@ static CGFloat const kARNumberInputSizeValue = 56;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.toolbarHidden = YES;
+
+    UIToolbar *toolbar = [[UIToolbar alloc] init];
+    toolbar.items = @[
+            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelTextField)],
+            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL],
+            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(doneTextField)]
+    ];
+    for (UITextField *textField in @[self.bloodSugarTextField, self.carbsTextField, self.humalogTextField, self.levemirTextField]) {
+        textField.inputAccessoryView = toolbar;
+        [textField.inputAccessoryView sizeToFit];
+    }
 
     self.logItem = [[ARLogItem store] newItem];
 }
@@ -149,17 +161,26 @@ static CGFloat const kARNumberInputSizeValue = 56;
         textField.font = [textField.font fontWithSize:kARNumberInputSizeValue];
         textField.placeholder = @"";
     }
+    self.shouldCancelChanges = NO;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    self.activeView = nil;
     textField.placeholder = self.savedPlaceholderText;
-    if ([textField.text isEqualToString:@""]) {
-        textField.font = [textField.font fontWithSize:kARNumberInputSizePlaceholder];
+    if (textField == self.bloodSugarTextField
+            || textField == self.carbsTextField
+            || textField == self.levemirTextField
+            || textField == self.humalogTextField) {
+        if ([textField.text isEqualToString:@""]) {
+            textField.placeholder = self.savedPlaceholderText;
+            textField.font = [textField.font fontWithSize:kARNumberInputSizePlaceholder];
+        }
     }
+    self.activeView = nil;
     self.savedPlaceholderText = nil;
 
-    [self updateLogItem];
+    if (!self.shouldCancelChanges) {
+        [self updateLogItem];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -238,6 +259,16 @@ static CGFloat const kARNumberInputSizeValue = 56;
         [self.activeView resignFirstResponder];
         self.activeView = nil;
     }
+}
+
+- (void)cancelTextField {
+    self.shouldCancelChanges = YES;
+    [self.activeView resignFirstResponder];
+}
+
+- (void)doneTextField {
+    self.shouldCancelChanges = NO;
+    [self.activeView resignFirstResponder];
 }
 
 @end

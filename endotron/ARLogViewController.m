@@ -10,6 +10,7 @@
 #import "ARLogItemTableViewCell.h"
 #import "ARLogItem.h"
 #import "ARLogItemFetchedResultsController.h"
+#import "ARInputViewController.h"
 
 @interface ARLogViewController ()
 
@@ -30,6 +31,16 @@
     self.resultsController.paused = YES;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    [super prepareForSegue:segue sender:sender];
+    if ([segue.identifier isEqualToString:@"editSegue"]) {
+        ARLogItem *item = [self.resultsController.fetchedResultsController objectAtIndexPath:self.tableView.indexPathForSelectedRow];
+        UINavigationController *navigationController = segue.destinationViewController;
+        ARInputViewController *inputViewController = (ARInputViewController *)navigationController.topViewController;
+        inputViewController.logItem = item;
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -46,26 +57,7 @@
 
 - (void)configureCell:(id)cell withObject:(id)object {
     ARLogItemTableViewCell *logCell = (ARLogItemTableViewCell *)cell;
-    ARLogItem *item = (ARLogItem *)object;
-
-    logCell.bloodTestLabel.text = [item.bloodSugar stringValue];
-    logCell.carbsLabel.text = [item.carbs stringValue];
-    logCell.commentsLabel.text = item.comments;
-    logCell.dateTimeLabel.text = [self formatTimestamp:item.timestamp];
-    logCell.foodLabel.text = item.food;
-    logCell.humalogLabel.text = [item.humalog stringValue];
-    logCell.levemirLabel.text = [item.levemir stringValue];
-    logCell.typeLabel.text = item.type;
-}
-
-- (NSString *)formatTimestamp:(NSDate *)timestamp {
-    static dispatch_once_t token;
-    static NSDateFormatter *formatter;
-    dispatch_once(&token, ^{
-        formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"MM/dd HH:mm";
-    });
-    return [formatter stringFromDate:timestamp];
+    logCell.item = (ARLogItem *)object;
 }
 
 - (IBAction)syncTapped:(id)sender {
@@ -73,6 +65,5 @@
 
 - (IBAction)settingsTapped:(id)sender {
 }
-
 
 @end

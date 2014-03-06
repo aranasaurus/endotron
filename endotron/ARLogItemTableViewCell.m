@@ -7,6 +7,7 @@
 //
 
 #import "ARLogItemTableViewCell.h"
+#import "ARLogItem.h"
 
 @interface ARLogItemTableViewCell ()
 
@@ -29,5 +30,29 @@
 
     // Configure the view for the selected state
 }
+
+- (void)setItem:(ARLogItem *)item {
+    _item = item;
+
+    self.bloodTestLabel.text = [item.bloodSugar stringValue];
+    self.carbsLabel.text = [item.carbs stringValue];
+    self.commentsLabel.text = item.comments;
+    self.dateTimeLabel.text = [self formatTimestamp:item.timestamp];
+    self.foodLabel.text = item.food;
+    self.humalogLabel.text = [item.humalog stringValue];
+    self.levemirLabel.text = [item.levemir stringValue];
+    self.typeLabel.text = item.type;
+}
+
+- (NSString *)formatTimestamp:(NSDate *)timestamp {
+    static dispatch_once_t token;
+    static NSDateFormatter *formatter;
+    dispatch_once(&token, ^{
+        formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"MM/dd HH:mm";
+    });
+    return [formatter stringFromDate:timestamp];
+}
+
 
 @end

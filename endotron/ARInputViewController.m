@@ -59,12 +59,15 @@ static CGFloat const kARNumberInputSizeValue = 56;
         [textField.inputAccessoryView sizeToFit];
     }
 
-    self.logItem = [[ARLogItem store] newItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self registerForKeyboardNotifications];
+    if (self.logItem == nil) {
+        self.logItem = [[ARLogItem store] newItem];
+    }
+    [self reloadUI];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

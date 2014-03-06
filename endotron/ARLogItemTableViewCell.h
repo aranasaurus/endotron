@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class ARLogItem;
+
 @interface ARLogItemTableViewCell : UITableViewCell
 
+@property (strong, nonatomic) ARLogItem *item;
 @property (weak, nonatomic) IBOutlet UILabel *dateTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bloodTestLabel;

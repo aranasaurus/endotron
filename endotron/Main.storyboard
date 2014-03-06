@@ -104,6 +104,7 @@
                                             <outlet property="humalogLabel" destination="0jQ-z2-y8A" id="2Ys-0A-WTZ"/>
                                             <outlet property="levemirLabel" destination="ZUE-QT-kLs" id="4nq-4g-vwQ"/>
                                             <outlet property="typeLabel" destination="U9u-NN-jBf" id="mAr-OD-1vz"/>
+                                            <segue destination="ECZ-Ix-1IR" kind="modal" identifier="editSegue" modalTransitionStyle="coverVertical" id="qOY-99-2FH"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -128,7 +129,7 @@
                     <navigationItem key="navigationItem" title="Log" id="RKd-D6-cYb">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="wt6-Tb-AVb">
                             <connections>
-                                <segue destination="ECZ-Ix-1IR" kind="modal" modalTransitionStyle="coverVertical" id="4AD-jr-Yho"/>
+                                <segue destination="ECZ-Ix-1IR" kind="modal" identifier="addSegue" modalTransitionStyle="coverVertical" id="4AD-jr-Yho"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -143,7 +144,7 @@
         <!--Input View Controller - Add Item-->
         <scene sceneID="T0o-op-4VZ">
             <objects>
-                <viewController id="O4b-eZ-dJb" customClass="ARInputViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InputViewController" id="O4b-eZ-dJb" customClass="ARInputViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wPS-AQ-TTq"/>
                         <viewControllerLayoutGuide type="bottom" id="4NT-kD-fdk"/>
@@ -297,7 +298,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UPw-ii-GlP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1117" y="276"/>
+            <point key="canvasLocation" x="1520" y="276"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="601-BG-kpt">
@@ -346,4 +347,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="qOY-99-2FH"/>
+    </inferredMetricsTieBreakers>
 </document>

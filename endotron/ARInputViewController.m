@@ -6,9 +6,11 @@
 //  Copyright (c) 2014 aranasaurus.com. All rights reserved.
 //
 
+#import <HTAutocompleteTextField/HTAutocompleteTextField.h>
 #import "ARInputViewController.h"
 #import "ARLogItem.h"
 #import "ARLogItemStore.h"
+#import "ARAutocompleteManager.h"
 
 static CGFloat const kARNumberInputSizePlaceholder = 24;
 static CGFloat const kARNumberInputSizeValue = 56;
@@ -17,7 +19,7 @@ static CGFloat const kARNumberInputSizeValue = 56;
 
 @property (weak, nonatomic) IBOutlet UITextField *timestampTextField;
 @property (weak, nonatomic) IBOutlet UITextField *mealTypeTextField;
-@property (weak, nonatomic) IBOutlet UITextField *foodTextField;
+@property (weak, nonatomic) IBOutlet HTAutocompleteTextField *foodTextField;
 @property (weak, nonatomic) IBOutlet UITextView *commentsTextField;
 @property (weak, nonatomic) IBOutlet UITextField *bloodSugarTextField;
 @property (weak, nonatomic) IBOutlet UITextField *carbsTextField;
@@ -59,6 +61,7 @@ static CGFloat const kARNumberInputSizeValue = 56;
         [textField.inputAccessoryView sizeToFit];
     }
 
+    self.foodTextField.autocompleteDataSource = [ARAutocompleteManager sharedManager];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -119,7 +122,7 @@ static CGFloat const kARNumberInputSizeValue = 56;
     if (timestamp != nil && [self.logItem.timestamp compare:timestamp] != NSOrderedSame) {
         self.logItem.timestamp = timestamp;
     }
-    self.logItem.type = self.mealTypeTextField.text;
+    self.logItem.type = [self.mealTypeTextField.text capitalizedString];
     self.logItem.food = self.foodTextField.text;
     self.logItem.comments = self.commentsTextField.text;
 
@@ -168,6 +171,24 @@ static CGFloat const kARNumberInputSizeValue = 56;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    NSDictionary *completesDict = [[NSUserDefaults standardUserDefaults] objectForKey:kARAutocompleteDefaultsKey];
+    if (completesDict == nil) {
+        completesDict = [NSDictionary dictionary];
+    }
+
+    NSArray *completesArray = completesDict[textField.accessibilityLabel];
+    if (completesArray == nil) {
+        completesArray = [NSArray array];
+    }
+
+    NSMutableSet *mutableCompletes = [NSMutableSet setWithArray:completesArray];
+    [mutableCompletes addObject:textField.text];
+
+    NSMutableDictionary *mutableDictionary = [completesDict mutableCopy];
+    mutableDictionary[textField.accessibilityLabel] = [mutableCompletes allObjects];
+    [[NSUserDefaults standardUserDefaults] setObject:mutableDictionary forKey:kARAutocompleteDefaultsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
     textField.placeholder = self.savedPlaceholderText;
     if (textField == self.bloodSugarTextField
             || textField == self.carbsTextField
@@ -272,6 +293,12 @@ static CGFloat const kARNumberInputSizeValue = 56;
 - (void)doneTextField {
     self.shouldCancelChanges = NO;
     [self.activeView resignFirstResponder];
+}
+
+- (IBAction)clearAutocompleteCache:(id)sender {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kARAutocompleteDefaultsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+//    [self toastMessage:@"Cleared!"];
 }
 
 @end

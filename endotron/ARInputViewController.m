@@ -171,23 +171,25 @@ static CGFloat const kARNumberInputSizeValue = 56;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    NSDictionary *completesDict = [[NSUserDefaults standardUserDefaults] objectForKey:kARAutocompleteDefaultsKey];
-    if (completesDict == nil) {
-        completesDict = [NSDictionary dictionary];
+    if (textField == self.foodTextField) {
+        NSDictionary *completesDict = [[NSUserDefaults standardUserDefaults] objectForKey:kARAutocompleteDefaultsKey];
+        if (completesDict == nil) {
+            completesDict = [NSDictionary dictionary];
+        }
+
+        NSArray *completesArray = completesDict[textField.accessibilityLabel];
+        if (completesArray == nil) {
+            completesArray = [NSArray array];
+        }
+
+        NSMutableSet *mutableCompletes = [NSMutableSet setWithArray:completesArray];
+        [mutableCompletes addObject:textField.text];
+
+        NSMutableDictionary *mutableDictionary = [completesDict mutableCopy];
+        mutableDictionary[textField.accessibilityLabel] = [mutableCompletes allObjects];
+        [[NSUserDefaults standardUserDefaults] setObject:mutableDictionary forKey:kARAutocompleteDefaultsKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
-
-    NSArray *completesArray = completesDict[textField.accessibilityLabel];
-    if (completesArray == nil) {
-        completesArray = [NSArray array];
-    }
-
-    NSMutableSet *mutableCompletes = [NSMutableSet setWithArray:completesArray];
-    [mutableCompletes addObject:textField.text];
-
-    NSMutableDictionary *mutableDictionary = [completesDict mutableCopy];
-    mutableDictionary[textField.accessibilityLabel] = [mutableCompletes allObjects];
-    [[NSUserDefaults standardUserDefaults] setObject:mutableDictionary forKey:kARAutocompleteDefaultsKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
 
     textField.placeholder = self.savedPlaceholderText;
     if (textField == self.bloodSugarTextField

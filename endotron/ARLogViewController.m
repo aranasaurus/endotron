@@ -11,6 +11,7 @@
 #import "ARLogItem.h"
 #import "ARLogItemFetchedResultsController.h"
 #import "ARInputViewController.h"
+#import "ARSettingsViewController.h"
 
 @interface ARLogViewController ()
 
@@ -64,6 +65,8 @@
 }
 
 - (IBAction)settingsTapped:(id)sender {
+    ARSettingsViewController *settingsVC = [[ARSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [self.navigationController pushViewController:settingsVC animated:YES];
 }
 
 @end

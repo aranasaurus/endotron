@@ -1,0 +1,3 @@
+[submodule "ext/CCTableData"]
+	path = ext/CCTableData
+	url = https://github.com/aranasaurus/CCTableData

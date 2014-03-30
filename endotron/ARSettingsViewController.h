@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ARSettingsViewController : UIViewController
+@interface ARSettingsViewController : UITableViewController
 
 @end

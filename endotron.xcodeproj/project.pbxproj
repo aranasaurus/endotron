@@ -32,6 +32,10 @@
 		94A8EAF718C938FF0085EF50 /* ARAutocompleteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A8EAF618C938FF0085EF50 /* ARAutocompleteManager.m */; };
 		94AF97F618C11C4000435841 /* Log.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 94AF97F418C11C4000435841 /* Log.xcdatamodeld */; };
 		94AF97F718C11C4000435841 /* Log.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 94AF97F418C11C4000435841 /* Log.xcdatamodeld */; };
+		94BB706318E89A70002EDA05 /* CCInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BB705C18E89A70002EDA05 /* CCInputCell.m */; };
+		94BB706418E89A70002EDA05 /* CCTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BB705E18E89A70002EDA05 /* CCTableCell.m */; };
+		94BB706518E89A70002EDA05 /* CCTableData.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BB706018E89A70002EDA05 /* CCTableData.m */; };
+		94BB706618E89A70002EDA05 /* CCTableSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BB706218E89A70002EDA05 /* CCTableSection.m */; };
 		94CEA73A18C11895003FD7E4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 941D1B71189AB28100C04F44 /* Images.xcassets */; };
 		94CEA73B18C118A5003FD7E4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943C7DF118C00D5800333693 /* CoreData.framework */; };
 /* End PBXBuildFile section */
@@ -84,6 +88,14 @@
 		94A8EAF518C938FF0085EF50 /* ARAutocompleteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAutocompleteManager.h; sourceTree = "<group>"; };
 		94A8EAF618C938FF0085EF50 /* ARAutocompleteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAutocompleteManager.m; sourceTree = "<group>"; };
 		94AF97F518C11C4000435841 /* Log.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Log.xcdatamodel; sourceTree = "<group>"; };
+		94BB705B18E89A70002EDA05 /* CCInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCInputCell.h; sourceTree = "<group>"; };
+		94BB705C18E89A70002EDA05 /* CCInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCInputCell.m; sourceTree = "<group>"; };
+		94BB705D18E89A70002EDA05 /* CCTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTableCell.h; sourceTree = "<group>"; };
+		94BB705E18E89A70002EDA05 /* CCTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTableCell.m; sourceTree = "<group>"; };
+		94BB705F18E89A70002EDA05 /* CCTableData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTableData.h; sourceTree = "<group>"; };
+		94BB706018E89A70002EDA05 /* CCTableData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTableData.m; sourceTree = "<group>"; };
+		94BB706118E89A70002EDA05 /* CCTableSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTableSection.h; sourceTree = "<group>"; };
+		94BB706218E89A70002EDA05 /* CCTableSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTableSection.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,11 +234,28 @@
 		943C7DE718BFF70900333693 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				94BB705A18E89A70002EDA05 /* CCTableData */,
 				943C7DE818BFF71B00333693 /* ARSettingsViewController.h */,
 				943C7DE918BFF71C00333693 /* ARSettingsViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
+		};
+		94BB705A18E89A70002EDA05 /* CCTableData */ = {
+			isa = PBXGroup;
+			children = (
+				94BB705B18E89A70002EDA05 /* CCInputCell.h */,
+				94BB705C18E89A70002EDA05 /* CCInputCell.m */,
+				94BB705D18E89A70002EDA05 /* CCTableCell.h */,
+				94BB705E18E89A70002EDA05 /* CCTableCell.m */,
+				94BB705F18E89A70002EDA05 /* CCTableData.h */,
+				94BB706018E89A70002EDA05 /* CCTableData.m */,
+				94BB706118E89A70002EDA05 /* CCTableSection.h */,
+				94BB706218E89A70002EDA05 /* CCTableSection.m */,
+			);
+			name = CCTableData;
+			path = ext/CCTableData/CCTableDataDemo/CCTableData;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -367,14 +396,18 @@
 			files = (
 				943C7DE518BFF65600333693 /* ARLogItem.m in Sources */,
 				943C7DE018BFF63300333693 /* ARLogViewController.m in Sources */,
+				94BB706418E89A70002EDA05 /* CCTableCell.m in Sources */,
 				943C7DEA18BFF71C00333693 /* ARSettingsViewController.m in Sources */,
+				94BB706518E89A70002EDA05 /* CCTableData.m in Sources */,
 				943C7DED18BFF74400333693 /* ARInputViewController.m in Sources */,
 				94AF97F618C11C4000435841 /* Log.xcdatamodeld in Sources */,
+				94BB706618E89A70002EDA05 /* CCTableSection.m in Sources */,
 				943C7DDC18BFF55A00333693 /* ARLogItemTableViewCell.m in Sources */,
 				941D1B60189AB28100C04F44 /* main.m in Sources */,
 				94A8EAF718C938FF0085EF50 /* ARAutocompleteManager.m in Sources */,
 				943C7DF518C02A6E00333693 /* ARLogItemFetchedResultsController.m in Sources */,
 				943C7DF018C00CF200333693 /* ARLogItemStore.m in Sources */,
+				94BB706318E89A70002EDA05 /* CCInputCell.m in Sources */,
 				943C7DDA18BFF55A00333693 /* ARAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

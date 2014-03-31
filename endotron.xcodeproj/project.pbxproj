@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1EC23A0E87FB45C1841873B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2184434031464EEE89BD3DCF /* libPods.a */; };
 		67EF28E8690E97B170BD32A8 /* ARLogItemStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EF2F5699AB4CCABA7A8817 /* ARLogItemStoreTests.m */; };
+		67EF2BCAFD79849F20072F7A /* ARSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EF231A3E90F234A8741124 /* ARSettings.m */; };
 		941D1B54189AB28100C04F44 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 941D1B53189AB28100C04F44 /* Foundation.framework */; };
 		941D1B56189AB28100C04F44 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 941D1B55189AB28100C04F44 /* CoreGraphics.framework */; };
 		941D1B58189AB28100C04F44 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 941D1B57189AB28100C04F44 /* UIKit.framework */; };
@@ -52,6 +53,8 @@
 
 /* Begin PBXFileReference section */
 		2184434031464EEE89BD3DCF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		67EF20C7FB7F3E377558B1E6 /* ARSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSettings.h; sourceTree = "<group>"; };
+		67EF231A3E90F234A8741124 /* ARSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSettings.m; sourceTree = "<group>"; };
 		67EF2F5699AB4CCABA7A8817 /* ARLogItemStoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARLogItemStoreTests.m; sourceTree = "<group>"; };
 		749BB9E56D044794949CDCF1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		941D1B50189AB28100C04F44 /* endotron.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = endotron.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -237,6 +240,8 @@
 				94BB705A18E89A70002EDA05 /* CCTableData */,
 				943C7DE818BFF71B00333693 /* ARSettingsViewController.h */,
 				943C7DE918BFF71C00333693 /* ARSettingsViewController.m */,
+				67EF231A3E90F234A8741124 /* ARSettings.m */,
+				67EF20C7FB7F3E377558B1E6 /* ARSettings.h */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -409,6 +414,7 @@
 				943C7DF018C00CF200333693 /* ARLogItemStore.m in Sources */,
 				94BB706318E89A70002EDA05 /* CCInputCell.m in Sources */,
 				943C7DDA18BFF55A00333693 /* ARAppDelegate.m in Sources */,
+				67EF2BCAFD79849F20072F7A /* ARSettings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

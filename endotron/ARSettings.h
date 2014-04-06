@@ -11,6 +11,7 @@
 @interface ARSettings : NSObject
 
 + (NSURL *)URL;
++ (NSURL *)serverURL;
 + (void)setURL:(NSURL *)url;
 + (NSString *)databaseName;
 + (void)setDatabaseName:(NSString *)databaseName;

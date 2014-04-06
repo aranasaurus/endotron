@@ -12,7 +12,7 @@
 @class ARLogItemStore;
 
 
-@interface ARLogItem : NSManagedObject <NSCoding>
+@interface ARLogItem : NSManagedObject
 
 @property (nonatomic, retain) NSDate *timestamp;
 @property (nonatomic, retain) NSString *type;
@@ -26,5 +26,8 @@
 
 + (NSString *)entityName;
 + (ARLogItemStore *)store;
+
+- (id)initWithJson:(NSDictionary *)json;
+- (NSDictionary *)encodeToJson;
 
 @end

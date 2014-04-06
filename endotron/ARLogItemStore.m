@@ -71,7 +71,31 @@
 - (NSArray *)itemsToSync {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[ARLogItem entityName]];
     request.predicate = [NSPredicate predicateWithFormat:@"needsUpload = YES"];
-    return [self.managedObjectContext executeFetchRequest:request error:NULL];
+    NSArray *items = [self.managedObjectContext executeFetchRequest:request error:NULL];
+
+    NSArray *columns;
+    NSMutableArray *points = [NSMutableArray new];
+    for (ARLogItem *item in items) {
+        NSDictionary *itemJson = [item encodeToJson];
+
+        [points addObject:[itemJson allValues]];
+
+        // First time through grab all of the columns, which are shared across all of the points.
+        if (!columns) {
+            columns = [itemJson allKeys];
+        }
+    }
+
+    // don't let a nil value get put in that dictionary, no way!
+    if (columns == nil) {
+        columns = @[];
+    }
+
+    return @[@{
+            @"name": @"logItems",
+            @"columns": columns,
+            @"points": points
+    }];
 }
 
 - (ARLogItem *)newItem {

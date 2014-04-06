@@ -34,6 +34,12 @@
     return [self serverInfo][@"url"];
 }
 
++ (NSURL *)serverURL {
+    NSURL *url = [self serverInfo][@"url"];
+    NSString *path = [NSString stringWithFormat:@"/db/%@/series?u=%@&p=%@&time_precision=s", [self databaseName], [self username], [self password]];
+    return [NSURL URLWithString:path relativeToURL:url];
+}
+
 + (void)setURL:(NSURL *)url {
     NSMutableDictionary *serverInfo = [self serverInfo];
     serverInfo[@"url"] = url;

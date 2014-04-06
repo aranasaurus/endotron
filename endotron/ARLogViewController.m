@@ -78,18 +78,16 @@
         [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
     };
 
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[ARSettings URL] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30];
+    NSArray *itemsJson = [[ARLogItem store] itemsToSync];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[ARSettings serverURL] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30];
     [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:[self itemsToSync]];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:itemsJson options:0 error:NULL]];
+
     NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:completion];
     [dataTask resume];
 
     self.hud.labelText = @"Syncing...";
-}
-
-- (NSData *)itemsToSync {
-    NSArray *items = [ARLogItem store].itemsToSync;
-    return [NSKeyedArchiver archivedDataWithRootObject:items];
 }
 
 - (void)hideHud {

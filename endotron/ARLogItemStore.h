@@ -17,6 +17,7 @@
 - (void)setup;
 - (NSFetchedResultsController *)allItems;
 - (NSFetchedResultsController *)allItems:(BOOL)ascending;
+- (NSArray *)itemsToSync;
 - (ARLogItem *)newItem;
 
 - (ARLogItem *)newItemWithTimestamp:(NSDate *)timestamp;

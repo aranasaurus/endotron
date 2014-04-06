@@ -150,6 +150,7 @@ static CGFloat const kARNumberInputSizeValue = 56;
 }
 
 - (IBAction)save:(id)sender {
+    self.logItem.needsUpload = @YES;
     [self.logItem.managedObjectContext save:NULL];
     self.logItem = nil;
     [self dismissViewControllerAnimated:YES completion:nil];

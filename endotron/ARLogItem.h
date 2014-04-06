@@ -12,7 +12,7 @@
 @class ARLogItemStore;
 
 
-@interface ARLogItem : NSManagedObject
+@interface ARLogItem : NSManagedObject <NSCoding>
 
 @property (nonatomic, retain) NSDate *timestamp;
 @property (nonatomic, retain) NSString *type;
@@ -22,6 +22,7 @@
 @property (nonatomic, retain) NSNumber *carbs;
 @property (nonatomic, retain) NSNumber *levemir;
 @property (nonatomic, retain) NSNumber *humalog;
+@property (nonatomic, retain) NSNumber *needsUpload;
 
 + (NSString *)entityName;
 + (ARLogItemStore *)store;

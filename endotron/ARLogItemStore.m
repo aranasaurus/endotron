@@ -68,6 +68,12 @@
                                                           cacheName:nil];
 }
 
+- (NSArray *)itemsToSync {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[ARLogItem entityName]];
+    request.predicate = [NSPredicate predicateWithFormat:@"needsUpload = YES"];
+    return [self.managedObjectContext executeFetchRequest:request error:NULL];
+}
+
 - (ARLogItem *)newItem {
     return [self newItemWithTimestamp:[NSDate date]];
 }
@@ -86,6 +92,7 @@
     } else {
         item.type = @"snack";
     }
+    item.needsUpload = @YES;
     return item;
 }
 

@@ -12,11 +12,15 @@
 #import "ARLogItemFetchedResultsController.h"
 #import "ARInputViewController.h"
 #import "ARSettingsViewController.h"
+#import "ARSettings.h"
+#import "MBProgressHUD.h"
+#import "ARLogItemStore.h"
 
 @interface ARLogViewController ()
 
 @property (strong, nonatomic) ARLogItemFetchedResultsController *resultsController;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) MBProgressHUD *hud;
 
 @end
 
@@ -62,6 +66,34 @@
 }
 
 - (IBAction)syncTapped:(id)sender {
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    void (^completion)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error) {
+            self.hud.labelText = @"Sync failed!";
+            NSLog(@"Sync error: %@", error);
+        } else {
+            self.hud.labelText = @"Sync complete.";
+        }
+        self.hud.mode = MBProgressHUDModeText;
+        [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
+    };
+
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[ARSettings URL] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[self itemsToSync]];
+    NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:completion];
+    [dataTask resume];
+
+    self.hud.labelText = @"Syncing...";
+}
+
+- (NSData *)itemsToSync {
+    NSArray *items = [ARLogItem store].itemsToSync;
+    return [NSKeyedArchiver archivedDataWithRootObject:items];
+}
+
+- (void)hideHud {
+    [self.hud hide:YES afterDelay:2];
 }
 
 - (IBAction)settingsTapped:(id)sender {
